@@ -6,7 +6,9 @@ on:
   #Trigger the workflow on push from the main branch
   push:
     branches:
-      - main
+      - master
+  pull_request:
+    types: [ opened, synchronize, reopened ]
 jobs:
   #Test's job
   tests:
