@@ -9,7 +9,7 @@ on:
       - completed
 # Environment variables available to all jobs and steps in this workflow
 env:
-  SPRING_BOOT_IMAGE_NAME: spring-boot-deployment
+  SPRING_BOOT_IMAGE_NAME: docker-deploy-demo
   SPRING_BOOT_CONTAINER_NAME: spring-boot-deployment-container
   SPRING_BOOT_DEPLOYMENT_NAME: spring-boot-deployment-container
 
@@ -28,6 +28,10 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Provide permission to run mvnw
         run: chmod +x ./mvnw
 
@@ -35,7 +39,10 @@ jobs:
         id: spring-boot-docker_build
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: /.
           file: ./Dockerfile
           push: true
           tags:  ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.SPRING_BOOT_IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
