@@ -14,6 +14,6 @@ class HomeControllerTest {
 
     @Test
     void hello() {
-        assertEquals("Hello from docker deploy!", homeController.hello() );
+        assertEquals("Hello from docker deploy! Now it running ot elasticbeans", homeController.hello() );
     }
 }
