@@ -15,6 +15,10 @@
     <description>docker-deploy-demo</description>
     <properties>
         <java.version>11</java.version>
+        <properties>
+            <sonar.organization>growsteam-1</sonar.organization>
+            <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        </properties>
     </properties>
     <dependencies>
         <dependency>
@@ -32,6 +36,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
