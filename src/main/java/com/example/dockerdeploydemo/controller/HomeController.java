@@ -8,7 +8,7 @@ public class HomeController {
 
     @GetMapping
     public String hello() {
-        return "Hello from docker deploy!";
+        return "Hello from docker deploy! Now it running ot elasticbeans";
     }
 
 }
