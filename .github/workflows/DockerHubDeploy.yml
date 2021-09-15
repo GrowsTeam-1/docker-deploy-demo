@@ -23,8 +23,6 @@ jobs:
       - name: Checkout main
         uses: actions/checkout@v2
 
-
-      - uses: actions/checkout@v1
       #Set up JDK 11
       - name: Set up JDK
         uses: actions/setup-java@v1
@@ -52,7 +50,6 @@ jobs:
           path: target/docker-deploy-demo-0.0.1-SNAPSHOT.jar
 
 
-
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
@@ -77,3 +74,5 @@ jobs:
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+
+
