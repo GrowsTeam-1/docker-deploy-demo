@@ -14,6 +14,8 @@ jobs:
   tests:
 #    if: ${{false}}
     name: Unit tests
+    env:
+      MY_SECRET_VALUE: ${{ secrets.MY_SECRET_VALUE }}
     #Run on Ubuntu using the latest version
     runs-on: ubuntu-latest
     #Job's steps
