@@ -19,6 +19,6 @@ class HomeControllerTest {
 
     @Test
     void getSecret() {
-        assertEquals("MY_SECRET_VALUE", homeController.hello() );
+        assertEquals("MY_SECRET_VALUE", homeController.getSecretValue() );
     }
 }
