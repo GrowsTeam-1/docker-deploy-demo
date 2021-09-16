@@ -38,6 +38,8 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       #Build the application using Maven
       - name: Build with Maven
+        env:
+          SECRET_VALUE: ${{secrets.SECRET_VALUE}}
         run: mvn -B package -DskipTests --file pom.xml
       #Build the application using Maven
       - name: Upload JAR
