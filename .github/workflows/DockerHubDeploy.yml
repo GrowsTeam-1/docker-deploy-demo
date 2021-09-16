@@ -16,6 +16,8 @@ env:
 jobs:
   build:
     name: Build, push, and deploy
+    env:
+      SECRET_VALUE: ${{ secrets.SECRET_VALUE }}
     runs-on: ubuntu-latest
     steps:
       #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
