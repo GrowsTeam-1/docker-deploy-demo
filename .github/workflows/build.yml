@@ -12,7 +12,7 @@ on:
 jobs:
   #Test's job
   tests:
-    if: ${{false}}
+#    if: ${{false}}
     name: Unit tests
     #Run on Ubuntu using the latest version
     runs-on: ubuntu-latest
@@ -108,7 +108,7 @@ jobs:
     #Depends on build's job
     needs: build
     name: Deploy
-#    if: ${{ false }}  # disable for now
+    if: ${{ false }}  # disable for now
     #Run on Ubuntu using the latest version
     runs-on: ubuntu-latest
     steps:

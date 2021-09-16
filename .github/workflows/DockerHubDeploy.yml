@@ -12,10 +12,12 @@ env:
   SPRING_BOOT_IMAGE_NAME: docker-deploy-demo
   SPRING_BOOT_CONTAINER_NAME: spring-boot-deployment-container
   SPRING_BOOT_DEPLOYMENT_NAME: spring-boot-deployment-container
+  MY_SECRET_VALUE: ${{ secrets.MY_SECRET_VALUE }}
 
 jobs:
   build:
     name: Build, push, and deploy
+    if: ${{false}}
     runs-on: ubuntu-latest
     steps:
       #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
@@ -38,7 +40,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       #Build the application using Maven
       - name: Build with Maven
-        run: mvn package -DskipTests --file pom.xml
+        run: mvn -B package -DskipTests --file pom.xml
 
 
 

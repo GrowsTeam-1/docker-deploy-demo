@@ -16,4 +16,9 @@ class HomeControllerTest {
     void hello() {
         assertEquals("Hello from docker deploy! Now it running ot elasticbeans", homeController.hello() );
     }
+
+    @Test
+    void getSecret() {
+        assertEquals("MY_SECRET_VALUE", homeController.hello() );
+    }
 }
