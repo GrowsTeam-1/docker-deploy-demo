@@ -67,7 +67,7 @@ jobs:
         id: docker-deploy-demo_build
         uses: docker/build-push-action@v2
         env:
-          app.value: ${{secrets.SECRET_VALUE}}
+          app.value2: ${{secrets.SECRET_VALUE}}
         with:
           context: ./
           file: ./Dockerfile
