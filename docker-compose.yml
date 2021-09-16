@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  backend:
+    container_name: demo-deploy
+    build: .
+
+    image: demo-deploy:latest
+    ports:
+      - 5000:5000
+
+    environment:
+      - MY_SECRET_VALUE=${MY_SECRET_VALUE}
+
+    networks:
+      - spring-cloud-network
+    entrypoint: ["java","-jar","app.jar"]
+
+networks:
+  spring-cloud-network:
