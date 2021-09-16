@@ -6,4 +6,6 @@ ARG JAR_FILE=target/*.jar
 
 COPY ${JAR_FILE} app.jar
 
+ENV SECRET_VALUE=${{secrets.SECRET_VALUE}}
+
 ENTRYPOINT ["java","-jar","/app.jar"]
