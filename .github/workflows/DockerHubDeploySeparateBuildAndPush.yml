@@ -1,4 +1,4 @@
-name: DockerHub deploy
+name: DockerHub Separate Build And Push
 
 on:
   workflow_dispatch:
@@ -57,7 +57,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Build image
-        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.SPRING_BOOT_IMAGE_NAME }}:${{ github.sha }} -f Dockerfile .
+        run: docker build --build-arg var_name=${{env.MY_SECRET_VALUE}} -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.SPRING_BOOT_IMAGE_NAME }}:${{ github.sha }} -f Dockerfile .
       - name: Push image to docker.io
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.SPRING_BOOT_IMAGE_NAME }}:${{ github.sha }}
 
