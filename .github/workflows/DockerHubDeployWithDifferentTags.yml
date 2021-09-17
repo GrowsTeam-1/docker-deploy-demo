@@ -58,7 +58,7 @@ jobs:
 
       - name: Build and push Spring Boot Image
         id: docker-deploy-demo_build
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v1
 
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
