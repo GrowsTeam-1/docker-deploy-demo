@@ -1,4 +1,4 @@
-name: DockerHub deploy
+name: DockerHub deploy with diff tags
 
 on:
   workflow_dispatch:
@@ -61,6 +61,8 @@ jobs:
         uses: docker/build-push-action@v2
 
         with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
           repository: ${{ env.SPRING_BOOT_IMAGE_NAME }}
           context: ./
           file: ./Dockerfile
