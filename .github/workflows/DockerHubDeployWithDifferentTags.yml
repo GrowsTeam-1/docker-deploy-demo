@@ -1,0 +1,75 @@
+name: DockerHub deploy
+
+on:
+  workflow_dispatch:
+
+  workflow_run:
+    workflows: [ "CI/CD Pipeline" ]
+    types:
+      - completed
+# Environment variables available to all jobs and steps in this workflow
+env:
+  SPRING_BOOT_IMAGE_NAME: fedenkom/docker-deploy-demo
+  SPRING_BOOT_CONTAINER_NAME: spring-boot-deployment-container
+  SPRING_BOOT_DEPLOYMENT_NAME: spring-boot-deployment-container
+  MY_SECRET_VALUE: ${{ secrets.MY_SECRET_VALUE }}
+
+jobs:
+  build:
+    name: Build, push, and deploy
+#    if: ${{false}}
+    runs-on: ubuntu-latest
+    steps:
+      #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
+
+      - name: Checkout main
+        uses: actions/checkout@v2
+
+      #Set up JDK 11
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+      #Set up Maven cache
+      - name: Cache Maven packages
+        #This action allows caching dependencies and build outputs to improve workflow execution time.
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      #Build the application using Maven
+      - name: Build with Maven
+        run: mvn -B package -DskipTests --file pom.xml
+
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Provide permission to run mvnw
+        run: chmod +x ./mvnw
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Spring Boot Image
+        id: docker-deploy-demo_build
+        uses: docker/build-push-action@v2
+
+        with:
+          repository: ${{ env.SPRING_BOOT_IMAGE_NAME }}
+          context: ./
+          file: ./Dockerfile
+          push: true
+          tag_with_ref: true
+          tag_with_sha: true
+          tags: latest
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
+
+
