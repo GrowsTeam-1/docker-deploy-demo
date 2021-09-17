@@ -57,7 +57,9 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Build image
-        run: docker build --build-arg var_name=${{env.MY_SECRET_VALUE}} -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.SPRING_BOOT_IMAGE_NAME }}:${{ github.sha }} -f Dockerfile .
+        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.SPRING_BOOT_IMAGE_NAME }}:${{ github.sha }} -f Dockerfile .
+        --build-arg my_secret_value=${{env.MY_SECRET_VALUE}}
+        --build-arg my_secret_mail=some_mail
       - name: Push image to docker.io
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.SPRING_BOOT_IMAGE_NAME }}:${{ github.sha }}
 
